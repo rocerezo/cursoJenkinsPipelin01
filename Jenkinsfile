@@ -101,6 +101,7 @@ pipeline {
                     }
                 }    
                 stage('6.3-UI Completas') {
+                    /*
                     stages{
                         // Selenium-Grid
                         stage('6.3.1-Chrome') {
@@ -153,6 +154,48 @@ pipeline {
                             }                        
                         }    
                     }
+                    */
+                    matrix {
+                        axes {
+                            axis {
+                                name 'NAVEGADOR'
+                                values 'firefox','opera','chrome','edge','safari'
+                            }
+                            axis {
+                                name 'SO'
+                                values 'windows10','windows11','macOS','ubuntu'
+                            }
+                        }
+                        excludes{
+                            exclude {
+                                axis {
+                                    name 'NAVEGADOR'
+                                    values 'safari'
+                                }
+                                axis {
+                                    name 'SO'
+                                    values 'windows10','windows11','ubuntu'
+                                }                            
+                            }
+                            exclude {
+                                axis {
+                                    name 'NAVEGADOR'
+                                    values 'edge'
+                                }
+                                axis {
+                                    name 'SO'
+                                    values 'macOS','ubuntu'
+                                }                            
+                            }
+                        }
+                        stages{
+                            stage('Pruebas en navegador') {
+                                steps {
+                                    echo "Probar la app en el navegador ${NAVEGADOR} corriendo en ${SO}"
+                                }
+                            }
+                        }
+                    }
                 }    
             }
         }
@@ -160,6 +203,14 @@ pipeline {
         stage('7-Guardo el artefacto') {
             steps {
                 echo 'En un repo de artefactos: NEXUS, ARTIFACTORY, REGISTRY DE IMAGENES DE DOCKER'
+                sh 'echo HOLA !!!!'
+                
+                archiveArtifacts allowEmptyArchive: true, artifacts: 'target/*.war', followSymlinks: false
+                sh '''
+                    pwd
+                    clear
+                    whoami
+                '''
             }
         }
     }
