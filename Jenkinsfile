@@ -1,6 +1,8 @@
 //DECLARATIVA
 pipeline {
     
+    agent any;
+    
     stages {
         stage('Compilación'){
             steps {
