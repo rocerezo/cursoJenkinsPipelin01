@@ -75,7 +75,7 @@ pipeline {
                 }    
                 stage('5.2-UI Básicas') {
                     steps {
-                        echo "Pruebas selenium en $params.NAVEGADOR_PRUEBAS_BASICAS - $NAVEGADOR_PRUEBAS_BASICAS y en ultima versión... 30 minutos"
+                        echo "Pruebas selenium en $params.NAVEGADOR_PRUEBAS_BASICAS y en ultima versión... 30 minutos"
                     }
                 }
             }
@@ -154,7 +154,7 @@ pipeline {
                         }    
                     }
                 }    
-            }
+            }checkou
         }
         // Aqui estamos en el limite de lo que es Entrega continua
         stage('7-Guardo el artefacto') {
